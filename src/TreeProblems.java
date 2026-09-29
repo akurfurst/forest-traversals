@@ -1,5 +1,3 @@
-import java.util.List;
-import java.util.Map;
 import java.util.*;
 
 public class TreeProblems {
@@ -166,7 +164,21 @@ public class TreeProblems {
    
   */
   public static <T> int maxDepth(Node<T> root) {
-    return -1;
+    if(root == null) return 0;
+    Queue<Node<T>> q = new LinkedList<>();
+    int depth = 0;
+    q.add(root);
+    while(!q.isEmpty()){
+      int size = q.size();
+      for(int i = 0; i < size; i++){
+        Node<T> current = q.remove();
+        for(Node<T> child : current.children){
+          q.add(child);
+        }
+      }
+      depth++;
+    }
+    return depth;
   }
 
   /*
@@ -188,6 +200,11 @@ public class TreeProblems {
    Hint: Use findRoot to start. Then, make a recursive helper method.
   */
   public static int maxDepth(Map<String, List<String>> tree) {
-    return -1;
+    if(tree == null) return 0;
+    int maxDepth = 0;
+    for(String current : tree.keySet()){
+      if(tree.get(current).size() > maxDepth) maxDepth = tree.get(current).size();
+    }
+    return maxDepth + 1;
   }
 }
