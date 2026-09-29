@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Map;
+import java.util.*;
 
 public class TreeProblems {
 
@@ -82,7 +83,12 @@ public class TreeProblems {
    A null tree should return 0
   */
   public static int sumTree(Node<Integer> root) {
-    return -1;
+    if(root == null) return 0;
+    int total = root.value;
+    for(Node<Integer> child: root.children){
+      total += sumTree(child);
+    }
+    return total;
   }
 
   /*
@@ -105,7 +111,10 @@ public class TreeProblems {
    Hint: There's a simple way to do this!
   */
   public static int sumTree(Map<Integer, List<Integer>> tree) {
-    return -1;
+    if(tree == null) return 0;
+    int total = 0;
+    for(Integer node : tree.keySet()) total+=node;
+    return total;
   }
 
   /*
@@ -128,6 +137,13 @@ public class TreeProblems {
    Hint: No recursion needed! Think about how you would do this by hand.
   */
   public static <T> T findRoot(Map<T, List<T>> tree) {
+    Set<T> set = new HashSet<>();
+    for(List<T> children : tree.values()){
+      for(T child : children) set.add(child);
+    }
+    for(T current : tree.keySet()){
+      if(!set.contains(current)) return current;
+    }
     return null;
   }
 
